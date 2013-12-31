@@ -1,0 +1,28 @@
+spring:
+  application.name: integrations.imc
+  config.name: application
+
+  main:
+    web-environment: true
+    show-banner: true
+    log-startup-info: true
+
+security:
+    basic.enabled: true
+    
+management:
+    contextPath: /mgmt
+
+server:
+  port: 9085
+
+spring:
+  datasource:
+    driverClassName: net.sourceforge.jtds.jdbc.Driver
+    url: jdbc:jtds:sqlserver://localhost:1433/xyz
+    username: xyz
+    password: xyz
+    maxActive: 100
+    maxIdle: 8
+    minIdle: 8
+    validationQuery: select 1

@@ -1,0 +1,20 @@
+<jsp:root xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" version="2.0">
+
+  <jsp:output omit-xml-declaration="yes" />
+
+  <spring:url value="/static/images/favicon.ico" var="favicon" />
+  <link rel="SHORTCUT ICON" href="${favicon}" />
+
+  <!-- Get the user local from the page context (it was set by Spring MVC's locale resolver) -->
+  <c:set var="userLocale">
+    <c:out value="${pageContext.response.locale}" default="en" />
+  </c:set>
+ 
+  
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>  
+  <script src="/imc/static/bootstrap/js/bootstrap.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
+  <script src="/imc/static/bootstrap/js/bootstrap-typeahead.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
+  <script src="/imc/static/bootstrap/js/jquery.switch.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
+
+</jsp:root>

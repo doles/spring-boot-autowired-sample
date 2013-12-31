@@ -1,0 +1,49 @@
+<jsp:root xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu"  xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
+	<jsp:output omit-xml-declaration="yes"/>
+	<jsp:directive.attribute name="id" type="java.lang.String" required="true" rtexprvalue="true" description="The identifier for this tag (do not change!)"/>
+	<jsp:directive.attribute name="render" type="java.lang.Boolean" required="false" rtexprvalue="true" description="Indicate if the contents of this tag and all enclosed tags should be rendered (default 'true')" />
+	<jsp:directive.attribute name="title" type="java.lang.String" required="true" description="Bootstrap menu title text"/>
+	<jsp:directive.attribute name="z" type="java.lang.String" required="false" description="Used for checking if element has been modified (to recalculate simply provide empty string value)"/>
+
+	<c:if test="${empty render or render}">
+    <!-- <div class="navbar">-->
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+                    <span class="icon-bar"><!-- icon-bar --></span>
+                    <span class="icon-bar"><!-- icon-bar --></span>
+                    <span class="icon-bar"><!-- icon-bar --></span>
+                </a>
+                <a class="brand" href="#">${fn:escapeXml(title)} </a>
+                <div class="nav-collapse">
+                	<jsp:doBody />
+                    <ul class="nav pull-right">
+                        <c:if test="${pageContext['request'].userPrincipal != null}">                     
+                        				        
+					        <sec:authentication property="principal" var="user_principal" scope="request"/>  
+							<menu:item id="usr_welcome_menu" label="Welcome ${user_principal.username}!" url="/" />     
+            				<menu:item id="logout_btn" label="Logout" url="/resources/j_spring_security_logout" z=""/>	
+						    <c:choose>
+						        <c:when test="${!empty user_principal.subUsers}"> 
+						        <menu:category id="sub_users" label="Switch User">
+						        	<c:forEach items="${user_principal.subUsers}" varStatus="subCounter" var="subUser">
+						            	<menu:item id="sub_user_${subCounter}" label="${subUser.username}" url="/j_spring_security_switch_user?j_username=${subUser.username}" />
+						            </c:forEach>					            		        
+						        </menu:category>
+						        </c:when>
+					        </c:choose>
+					        <sec:authorize ifAnyGranted="ROLE_PREVIOUS_ADMINISTRATOR">
+					        	<menu:item id="logout_btn" label="Self Login" url="/j_spring_security_exit_user" z=""/>  
+					        </sec:authorize>           					
+                        </c:if>
+                        <c:if test="${pageContext['request'].userPrincipal == null}">
+            				<menu:item id="logout_btn" label="Login" url="/login" z=""/>                        
+                        </c:if>                      
+                    </ul>                	
+                </div>
+             </div>
+        </div>
+        <!-- /navbar-inner -->
+    <!--  </div>-->
+	</c:if>
+</jsp:root>

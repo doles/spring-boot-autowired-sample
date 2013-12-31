@@ -1,0 +1,41 @@
+<script id="profilerTemplate" type="text/x-jquery-tmpl">
+    	<div class="profiler-header">
+			<div class="request">Profiler: ${url}</div>
+			<div class="request-date">${devcodes.profiler.formatDate(date)}</div>
+			<div style="clear: both; line-height: 0px">&nbsp;</div>
+		</div>
+		<div>
+			<table cellspacing="0" class="timings-table">
+				<thead>
+					<tr>
+						<th style="width: 65%">action</th>
+						<th style="width: 10%">duration (ms)</th>
+						<th style="width: 15%">from start (ms)</th>
+						<th style="width: 10%">sql</th>
+					</tr>
+				</thead>
+				<tbody>			
+					{{tmpl(rootEntry) "#profilerEntryRowTemplate"}}
+				</tbody>
+			</table>
+		</div>
+	</script>
+
+<script id="profilerEntryRowTemplate" type="text/x-jquery-tmpl">
+    	<tr class="${tag} depth-${depth}">
+			<td class="entry">
+				<span class="indent" style="float: left; margin-left: ${devcodes.profiler.renderIndent(depth)}">&nbsp;</span>
+				{{html devcodes.profiler.formatEntry($data)}}
+				<div style="clear: both; line-height: 0px">&nbsp;</div>
+			<td class="timing duration">${duration}</div>
+			<td class="timing from-start">+${fromStart}</td>
+			<td class="queries">
+				{{if queries.length > 0}}
+					<span class="toggle-${depth}"><a class="show-queries" href="#">${queries.length} queries</a></span>
+				{{/if}}
+			</td>
+		</tr>
+		{{each children}}
+        	{{tmpl($value) "#profilerEntryRowTemplate"}}
+    	{{/each}}
+</script>

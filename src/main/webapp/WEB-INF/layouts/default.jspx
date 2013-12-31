@@ -1,0 +1,49 @@
+<html xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:tiles="http://tiles.apache.org/tags-tiles" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" >  
+	
+	<jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" />
+	
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />  
+	<jsp:directive.page pageEncoding="UTF-8" /> 
+			
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=8" />	
+			
+		
+		
+		<spring:url value="/static/bootstrap/css/bootstrap.css" var="bootstrap_css"></spring:url>
+		<spring:url value="/static/bootstrap/css/bootstrap-responsive.css" var="bootstrap_r_css"></spring:url>
+		<spring:url value="/static/bootstrap/css/bootstrap-switch.css" var="bootstrap_switch_css"></spring:url>
+		<spring:url value="/static/bootstrap/js/bootstrap.js" var="bootstrap_js"></spring:url>
+		<spring:url value="/static/bootstrap/js/jquery.switch.js" var="bootstrap_switch_js"></spring:url>
+
+	 <!-- Le styles -->
+	    <link href="${bootstrap_css}" rel="stylesheet"/>
+	    <link href="${bootstrap_r_css}" rel="stylesheet"/>
+	    <link href="${bootstrap_switch_css}" rel="stylesheet"/>
+	
+	    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	    <!--[if lt IE 9]>
+	      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+		   
+		
+		<spring:message code="application_name" var="app_name" htmlEscape="false"/>
+		<title>IMC</title>
+		<util:load-scripts/>
+	</head>
+	
+  	<body style="padding-top: 50px;">
+  	
+  	<tiles:insertAttribute name="menu" ignore="true" />
+  	<div class="container"> 
+			<div class="row-fluid"><div class="span12"><tiles:insertAttribute name="header" ignore="true" /></div></div>			
+			<div class="row-fluid">
+				<div class="span3"><tiles:insertAttribute name="sidebar" ignore="true" /> </div>
+				<div class="span9"><tiles:insertAttribute name="body" ignore="true" /> </div>
+			</div>
+	</div>
+	<tiles:insertAttribute name="footer" ignore="true"/> 
+		 
+	</body>
+</html>
