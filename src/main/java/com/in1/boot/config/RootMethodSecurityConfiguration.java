@@ -106,7 +106,9 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
 
     @Bean
     public UserDetailsService userDetailsService() {
-    	return new JdbcUserDetailsManager();
+    	JdbcUserDetailsManager m = new JdbcUserDetailsManager();
+    	m.setDataSource(dataSource);
+    	return m;
     }    
 	
 	@Override
