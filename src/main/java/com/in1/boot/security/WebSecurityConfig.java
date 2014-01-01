@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	//which has already providers set 
 	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
+	protected void registerAuthentication(AuthenticationManagerBuilder auth)
 			throws Exception {
 		
 		//auth.userDetailsService(rootMethodSecurityConfiguration.userDetailsService());

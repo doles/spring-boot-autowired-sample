@@ -17,7 +17,7 @@ public class ActuatorWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
+	protected void registerAuthentication(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.inMemoryAuthentication().withUser("xyz")
 				.password("xyz").roles("ADMIN");

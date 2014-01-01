@@ -78,7 +78,7 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
 //	}
 	
 	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
+	protected void registerAuthentication(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.authenticationProvider(aclDaoAuthenticationProvider());
 		auth.authenticationProvider(aclAnonymousAuthenticationProvider());
@@ -104,20 +104,20 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
     	return m;
     }    
 	
-	@Override
-	public MethodSecurityExpressionHandler createExpressionHandler() {
-		return aclExpressionHandler();
-	}
-    
 //	@Override
-//	public MethodSecurityExpressionHandler expressionHandler() {
+//	public MethodSecurityExpressionHandler createExpressionHandler() {
 //		return aclExpressionHandler();
 //	}
-//	
-//	@Override
-//	public MethodSecurityExpressionHandler methodExpressionHandler() {
-//		return expressionHandler();
-//	}	
+    
+	@Override
+	public MethodSecurityExpressionHandler expressionHandler() {
+		return aclExpressionHandler();
+	}
+	
+	@Override
+	public MethodSecurityExpressionHandler methodExpressionHandler() {
+		return expressionHandler();
+	}	
 	
 	@Bean
 	public MethodSecurityExpressionHandler aclExpressionHandler(){
