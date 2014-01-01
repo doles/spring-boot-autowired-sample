@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.jdbc.TomcatDataSourceConfiguration
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -15,21 +14,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
-import com.in1.boot.IntegrationsImcApplication;
-
 
 @EnableTransactionManagement(mode = AdviceMode.ASPECTJ)//equivalent of <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager"/>, it will look up any PlatformTransactionManager bean
 @Configuration
-public class DataSourceConfig extends TomcatDataSourceConfiguration implements TransactionManagementConfigurer, Ordered  {
+public class DataSourceConfig extends TomcatDataSourceConfiguration implements TransactionManagementConfigurer  {
     
     
     public static String JPA_PERSISTENCE_NAME = "persistenceUnit";
     public static String JPA_PERSISTENCE_LOCATION = "/META-INF/hibernate/persistence.xml";
-    
-	@Override
-	public int getOrder() {		
-		return IntegrationsImcApplication.ROOT_DATA_SOURCE_CONFIG_ORDER;
-	}
 	
     @Override
     public DataSource dataSource() {

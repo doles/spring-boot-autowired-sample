@@ -37,18 +37,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		
 		web
-			//.ignoring().antMatchers("/static/**").and()
-			.ignoring().antMatchers("/**/*.css").and()
-			.ignoring().antMatchers("/**/*.jpg").and()
-			.ignoring().antMatchers("/**/*.gif").and()
-			.ignoring().antMatchers("/**/*.png").and()
-			.ignoring().antMatchers("/**/*.js").and()
-			.ignoring().antMatchers("/**/*.xml").and()
-			.ignoring().antMatchers("/**/*.swf").and()
+			.ignoring().antMatchers("/static/**").and()
+			.ignoring().antMatchers("/web-inf/**/*.*").and()
 			.ignoring().antMatchers("/login");
 		
-		
-			//TODO: add here scheduler url's
 	}	
 	
 	@Override

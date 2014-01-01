@@ -13,7 +13,6 @@ import org.springframework.cache.ehcache.EhCacheFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -44,22 +43,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
-import com.in1.boot.IntegrationsImcApplication;
-
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration implements Ordered {
+public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 	
 	@Autowired
 	public DataSource dataSource;
 	
     private static String ACL_CACHE_NAME = "aclCache";
-    
-	@Override
-	public int getOrder() {		
-		return IntegrationsImcApplication.ROOT_METHOD_SECURITY_CONFIG_ORDER;
-	}
+   
     
 //	@Override
 //	protected AccessDecisionManager accessDecisionManager() {
@@ -115,6 +108,16 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
 	public MethodSecurityExpressionHandler createExpressionHandler() {
 		return aclExpressionHandler();
 	}
+    
+//	@Override
+//	public MethodSecurityExpressionHandler expressionHandler() {
+//		return aclExpressionHandler();
+//	}
+//	
+//	@Override
+//	public MethodSecurityExpressionHandler methodExpressionHandler() {
+//		return expressionHandler();
+//	}	
 	
 	@Bean
 	public MethodSecurityExpressionHandler aclExpressionHandler(){

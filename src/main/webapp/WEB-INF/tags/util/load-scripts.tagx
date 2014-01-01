@@ -13,8 +13,8 @@
   
   
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>  
-  <script src="/imc/static/bootstrap/js/bootstrap.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
-  <script src="/imc/static/bootstrap/js/bootstrap-typeahead.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
-  <script src="/imc/static/bootstrap/js/jquery.switch.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
+  <script src="/static/bootstrap/js/bootstrap.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
+  <script src="/static/bootstrap/js/bootstrap-typeahead.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
+  <script src="/static/bootstrap/js/jquery.switch.js" type="text/javascript"> <!-- required for FF3 and Opera --> </script>
 
 </jsp:root>

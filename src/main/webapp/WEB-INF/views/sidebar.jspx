@@ -1,35 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:spring="http://www.springframework.org/tags" xmlns:sidebar="urn:jsptagdir:/WEB-INF/tags/sidebar" xmlns:sec="http://www.springframework.org/security/tags" version="2.0">     
 	
-	<sidebar:sidebar>
-	
-		<c:if test="${not empty hotelId}">
-		
-			<sidebar:heading id="" label="Mappings"></sidebar:heading>
-			<sidebar:item id="s_View_Room_Mappings" label="View Room Mappings" url="/integrations/hotel/${hotelId}/rooms" z=""/>
-			<sidebar:item id="s_View_Rate_Mappings" label="View Rate Mappings" url="/integrations/hotel/${hotelId}/rates" z=""/>
-			<sidebar:item id="s_View_Service_Mappings" label="View Service Mappings" url="/integrations/hotel/${hotelId}/services" z=""/>
-			
-			<sidebar:heading id="" label="Audit"></sidebar:heading>
-			<sidebar:item id="s_Availability_Audit" label="Availability Audit" url="/audit/availability/hotel/${hotelId}" z=""/>
-			<sidebar:item id="s_Rules_Audit" label="Rules Audit" url="/audit/rule/hotel/${hotelId}" z=""/>
-			
-		</c:if>	
-		<sidebar:heading id="" label="Users"></sidebar:heading>
-	    <sidebar:item id="s_user_new" label="Create User" url="/user?form" z="Zv1m8u2rG+JFKcvJ+AHVVK0ey24="/>
-	    <sidebar:item id="s_user_list" label="List Users" url="/user?page=1&amp;size=${empty param.size ? 10 : param.size}" z="4MY4uybxa60Q1G2rlI5bOwg+sm0="/>	
-	    <sidebar:item id="s_userhotel_new" label="Attach Hotel" url="/hotel/attach?form" z="qYpuuJuPupoYjD8LM0ISnxylj4o="/>		
-		<sidebar:heading id="" label="Hotels"></sidebar:heading>
-	    
-	    <sidebar:item id="s_userhotel_list" label="List Hotels" url="/hotel?page=1&amp;size=${empty param.size ? 10 : param.size}" z="fTjcT4INZTypLgu+ZHmwzE55ORs="/>	       		
-		<sidebar:heading id="" label="Integrations"></sidebar:heading>
-		<c:if test="${not empty hotelId}">
-			<sidebar:item id="s_View_Linked_Integrations" label="Linked Integrations" url="/integrations/hotel/${hotelId}" z=""/>
-		</c:if>
-		<sec:authorize  ifAllGranted="ROLE_ADMIN">
-			<sidebar:item id="s_integrations_new" label="Create Integration" url="/integrations?form" z="qYpuuJuPupoYjD8LM0ISnxylj4o="/>
-	    	<sidebar:item id="s_integrations_list" label="List Integrations" url="/integrations?page=1&amp;size=${empty param.size ? 10 : param.size}" z="fTjcT4INZTypLgu+ZHmwzE55ORs="/>
-	    </sec:authorize>	       		
-	</sidebar:sidebar>
-	
 </div>

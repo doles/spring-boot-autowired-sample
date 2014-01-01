@@ -8,9 +8,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.Ordered;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -30,19 +30,12 @@ import org.thymeleaf.extras.tiles2.spring.web.configurer.ThymeleafTilesConfigure
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import com.in1.boot.IntegrationsImcApplication;
-
 
 @EnableWebMvc
 @Configuration  
-public class RootMvcConfiguration extends WebMvcConfigurerAdapter implements Ordered {
+public class RootMvcConfiguration extends WebMvcConfigurerAdapter {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
-    
-	@Override
-	public int getOrder() {		
-		return IntegrationsImcApplication.ROOT_MVC_CONFIG_ORDER;
-	}
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -52,13 +45,13 @@ public class RootMvcConfiguration extends WebMvcConfigurerAdapter implements Ord
          * directory. Perhaps rename resources to static.
          */
         registry.addResourceHandler("/static/**").addResourceLocations(
-                "/static/");
+                "classpath:/static/");
 
         /*
          * Favicon mapping.
          */
         registry.addResourceHandler("/favicon.ico").addResourceLocations(
-                "/static/images/favicon.ico");
+                "classpath:/static/images/favicon.ico");
 
     }
     
@@ -73,12 +66,6 @@ public class RootMvcConfiguration extends WebMvcConfigurerAdapter implements Ord
       registry.addInterceptor(localeChangeInterceptor);
    }
     
-    
-    //<mvc:default-servlet-handler/>
-    //@Override
-    //public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-    //  configurer.enable("dispatcher-servlet");
-    //}
     
     
     @Override
@@ -173,6 +160,11 @@ public class RootMvcConfiguration extends WebMvcConfigurerAdapter implements Ord
     }
     
     //THEYMELEAF
+    
+    /**
+     * Uncomment to use thymeleaf instead of jstl
+     
+    
     @Bean 
     public ServletContextTemplateResolver templateResolver() {
             ServletContextTemplateResolver resolver = new ServletContextTemplateResolver();
@@ -195,10 +187,12 @@ public class RootMvcConfiguration extends WebMvcConfigurerAdapter implements Ord
             return engine;
     }
     
+    **/
+    
     //TILES
     
     /**
-     * Uncomment to use tiles with thymeleaf instead jstl
+     * Uncomment to use thymeleaf instead of jstl
      
     @Bean 
     public ThymeleafViewResolver tilesViewResolver() throws Exception{
@@ -212,31 +206,49 @@ public class RootMvcConfiguration extends WebMvcConfigurerAdapter implements Ord
    **/
     
     /**
-     * Old for JSTL - comment out  when using thymeleaf
+     * Comment out  when using thymeleaf
      */
      @Bean 
      public UrlBasedViewResolver tilesViewResolver(){
     	
     	UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver();
     	tilesViewResolver.setViewClass(TilesView.class);
+    	tilesViewResolver.setOrder(1);
     	return tilesViewResolver;
     }
     
-    
-    
-    @Bean
-    public TilesConfigurer tilesConfigurer(){ 
-    	
-    	String[] definitions = new String[] {
-    			"/WEB-INF/layouts/layouts.xml",
-    			"/WEB-INF/views/**/views.xml" /*Scans views directory for Tiles configurations */
-    			};
-    	
-    	ThymeleafTilesConfigurer tilesConfigurer = new ThymeleafTilesConfigurer();
-    	tilesConfigurer.setDefinitions(definitions);
-    	//tilesConfigurer.afterPropertiesSet();
-    	return tilesConfigurer;
-    	
-    }
+
+//	  FOR THYMELEAF
+//    @Bean
+//    public TilesConfigurer tilesConfigurer(){ 
+//    	
+//    	String[] definitions = new String[] {
+//    			"/WEB-INF/layouts/layouts.xml",
+//    			"/WEB-INF/views/**/views.xml" //Scans views directory for Tiles configurations
+//    			};
+//    	
+//    	ThymeleafTilesConfigurer tilesConfigurer = new ThymeleafTilesConfigurer();
+//    	tilesConfigurer.setDefinitions(definitions);
+//    	//tilesConfigurer.afterPropertiesSet();
+//    	return tilesConfigurer;
+//    	
+//    }
+     
+   
+   //FOR JSTL
+   @Bean
+   public TilesConfigurer tilesConfigurer(){ 
+   	
+   	String[] definitions = new String[] {
+   			"/WEB-INF/layouts/layouts.xml",
+   			"/WEB-INF/views/**/views.xml" //Scans views directory for Tiles configurations
+   			};
+   	
+   	TilesConfigurer tilesConfigurer = new TilesConfigurer();
+   	tilesConfigurer.setDefinitions(definitions);
+   	//tilesConfigurer.afterPropertiesSet();
+   	return tilesConfigurer;
+   	
+   }     
 
 }
