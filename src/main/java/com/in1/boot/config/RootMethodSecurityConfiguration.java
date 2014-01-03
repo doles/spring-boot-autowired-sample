@@ -9,6 +9,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.ehcache.EhCacheFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -44,45 +45,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+public class RootMethodSecurityConfiguration {
 	
 	@Autowired
-	public DataSource dataSource;
+	private DataSource dataSource;
 	
     private static String ACL_CACHE_NAME = "aclCache";
-   
-    
-//	@Override
-//	protected AccessDecisionManager accessDecisionManager() {
-//		
-//		return aclAccessDecisionManager();
-//    
-//	}
-    
-	
-//	@Bean
-//	protected AccessDecisionManager aclAccessDecisionManager() {
-//
-//		@SuppressWarnings("rawtypes")
-//		List<AccessDecisionVoter> voters = new ArrayList<AccessDecisionVoter>(2);
-//		voters.add(new WebExpressionVoter());//must be fir
-//		voters.add(new RoleVoter());		
-//		voters.add(new AuthenticatedVoter());
-//
-//		AffirmativeBased adm = new AffirmativeBased(voters);
-//
-//		return adm;
-//
-//	}
-	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.authenticationProvider(aclDaoAuthenticationProvider());
-		auth.authenticationProvider(aclAnonymousAuthenticationProvider());
-	}
+
 	
     @Bean(name="aclAnonymousAuthenticationProvider")
     public AnonymousAuthenticationProvider aclAnonymousAuthenticationProvider() {
@@ -102,22 +72,7 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
     	JdbcUserDetailsManager m = new JdbcUserDetailsManager();
     	m.setDataSource(dataSource);
     	return m;
-    }    
-	
-	@Override
-	public MethodSecurityExpressionHandler createExpressionHandler() {
-		return aclExpressionHandler();
-	}
-    
-//	@Override
-//	public MethodSecurityExpressionHandler expressionHandler() {
-//		return aclExpressionHandler();
-//	}
-//	
-//	@Override
-//	public MethodSecurityExpressionHandler methodExpressionHandler() {
-//		return expressionHandler();
-//	}	
+    }	
 	
 	@Bean
 	public MethodSecurityExpressionHandler aclExpressionHandler(){
@@ -184,7 +139,7 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
 
     @Bean//done
     public MutableAclService aclService() throws CacheException, IOException {
-
+    	
     	JdbcMutableAclService aclService = new JdbcMutableAclService(dataSource, aclLookupStrategy(), aclCache());
         aclService.setClassIdentityQuery("SELECT @@IDENTITY");
         aclService.setSidIdentityQuery("SELECT @@IDENTITY");
@@ -219,6 +174,33 @@ public class RootMethodSecurityConfiguration extends GlobalMethodSecurityConfigu
         return tm;
     }  
 
-	
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
+    @Configuration
+    protected static class ActualMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+
+        @Autowired
+        @Qualifier("aclDaoAuthenticationProvider")
+        private AuthenticationProvider aclDaoAuthenticationProvider;
+
+        @Autowired
+        @Qualifier("aclAnonymousAuthenticationProvider")
+        private AnonymousAuthenticationProvider aclAnonymousAuthenticationProvider;
+
+        @Autowired
+        @Qualifier("aclExpressionHandler")
+        private MethodSecurityExpressionHandler aclExpressionHandler;
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth)
+                throws Exception {
+            auth.authenticationProvider(aclDaoAuthenticationProvider);
+            auth.authenticationProvider(aclAnonymousAuthenticationProvider);
+        }
+
+        @Override
+        public MethodSecurityExpressionHandler createExpressionHandler() {
+            return aclExpressionHandler;
+        }
+    }
 
 }

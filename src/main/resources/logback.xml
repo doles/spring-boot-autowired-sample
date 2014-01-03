@@ -16,12 +16,4 @@
     <appender-ref ref="CONSOLE" />
   </root>
 
-  <logger name="org.hibernate.validator.internal.util.Version" level="WARN"/>
-  <logger name="org.apache.coyote.http11.Http11NioProtocol" level="WARN"/>
-  <logger name="org.apache.tomcat.util.net.NioSelectorPool" level="INFO"/>
-  <logger name="org.apache.catalina.startup.DigesterFactory" level="INFO"/>
-  <logger name="org.apache.commons.digester.Digester" level="INFO" />
-  <logger name="com.mchange.v2.c3p0" level="DEBUG" />
-  <logger name="com.in1.portalin1" level="DEBUG" />
-
 </configuration>

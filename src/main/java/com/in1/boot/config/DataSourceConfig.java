@@ -22,44 +22,20 @@ public class DataSourceConfig extends TomcatDataSourceConfiguration implements T
     
     public static String JPA_PERSISTENCE_NAME = "persistenceUnit";
     public static String JPA_PERSISTENCE_LOCATION = "/META-INF/hibernate/persistence.xml";
-	
-    @Override
-    public DataSource dataSource() {
-    	return jpaDataSource();
-    }
+    
     
     public PlatformTransactionManager annotationDrivenTransactionManager() {
     	return jpaTransactionManager();
-    }
-
-    //@Bean
-    //public PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
-    //    return new PersistenceExceptionTranslationPostProcessor();
-    //}
-    /*
-     * Required
-     */
+    }    
+    
     @Bean
     public HibernateExceptionTranslator hibernateExceptionTranslator() {
         return new HibernateExceptionTranslator();
-    }
-
-	/**
-	 * Bean that allows to get data base connection.
-	 * 
-	 * @return
-	 */
+    } 
+    
 	@Bean(name="jpaDataSource")
 	public DataSource jpaDataSource() {
-		org.apache.tomcat.jdbc.pool.DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
-		dataSource.setDriverClassName(getDriverClassName());
-		dataSource.setUrl(getUrl());
-		dataSource.setUsername(getUsername());
-		dataSource.setPassword(getPassword());
-		dataSource.setMaxActive(30);
-		dataSource.setMaxWait(60 * 1000);
-
-		return dataSource;
+		return this.dataSource();
 	}
 
     /*
@@ -75,9 +51,8 @@ public class DataSourceConfig extends TomcatDataSourceConfiguration implements T
     }      
 
     @Bean(name = "entityManagerFactory")
-    public EntityManagerFactory jpaEmf() {
-
-
+    public EntityManagerFactory jpaEmf() { 
+    	
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(jpaDataSource());
         emf.setPersistenceUnitName(JPA_PERSISTENCE_NAME);
@@ -85,9 +60,6 @@ public class DataSourceConfig extends TomcatDataSourceConfiguration implements T
         emf.afterPropertiesSet();
         return emf.getObject();
 
-
     }
-
-
 
 }

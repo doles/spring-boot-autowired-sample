@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 
 
-@Order(Ordered.LOWEST_PRECEDENCE-4)
+@Order(Ordered.LOWEST_PRECEDENCE-2)
 public class ActuatorWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	public ActuatorWebSecurityConfig(boolean disableDefaults){

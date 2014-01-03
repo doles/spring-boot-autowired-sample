@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.ui.context.support.ResourceBundleThemeSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -32,7 +35,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 
 @EnableWebMvc
-@Configuration  
+@Configuration
 public class RootMvcConfiguration extends WebMvcConfigurerAdapter {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
@@ -237,6 +240,7 @@ public class RootMvcConfiguration extends WebMvcConfigurerAdapter {
    
    //FOR JSTL
    @Bean
+   @Profile(value = { "!test" })
    public TilesConfigurer tilesConfigurer(){ 
    	
    	String[] definitions = new String[] {
